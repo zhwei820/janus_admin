@@ -22,20 +22,28 @@ export default new Router({
       },
       path: '/',
       component: Container,
-      redirect: { name: 'services' },
+      redirect: {name: 'serviceList'},
       children: [
         {
-          name: 'services',
-          path: 'services',
-          component: () => import('./views/services/ServiceList.vue'),
+          name: 'serviceList',
+          path: 'service',
+          component: () => import('./views/service/ServiceList.vue'),
         },
-        ],
+        {
+          name: 'serviceDetail',
+          path: 'service/:name',
+          component: () => import('./views/service/ServiceDetail.vue'),
+        },
+      ],
     },
     {
       path: '/login',
       name: 'Login',
       component: Login
-    }
-
+    },
+    {
+      path: '*',
+      component: () => import('@/views/Notfound.vue'),
+    },
   ]
 })

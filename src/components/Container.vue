@@ -11,26 +11,23 @@
         <Menu mode="horizontal" theme="light" width="auto" :active-name="activeMenu"
               @on-select="onSelectMenuChange">
 
-          <MenuItem name="services" to="/services">Janus Apis</MenuItem>
+          <MenuItem name="service" to="/service">Janus Apis</MenuItem>
           <MenuItem name="authservers" to="/janusauth">Janus Auth</MenuItem>
           <MenuItem name="health" to="/health">Health Check</MenuItem>
 
         </Menu>
       </div>
 
-    <div class="layout-nav" style="float: right; margin-right: 100px; margin-top: 35px">
-      <Dropdown v-if="user.token && user.username">
+    <div class="layout-nav" style="float: right; margin-right: 100px; margin-top: 25px">
+      <Dropdown v-if="user.access_token">
 
         <a href="javascript:void(0)">
-          {{ user.name }}
+          <p>user</p>
           <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
           <DropdownItem>
-            <a href="/changepassword">修改密码</a>
-          </DropdownItem>
-          <DropdownItem>
-            <a href="/logout">退出登录</a>
+            <a href="/logout">Login</a>
           </DropdownItem>
 
         </DropdownMenu>
@@ -69,6 +66,7 @@
     computed: {
       user() {
         const userInfo = storage.getItem(USER_INFO)
+        console.log(userInfo)
         return userInfo
       },
       activeMenu() {

@@ -27,6 +27,7 @@
 <script>
   import {Login} from '@/apis/auth'
   import * as config from '@/config'
+  import router from '@/router'
 
   export default {
     name: "Login",
@@ -56,6 +57,7 @@
             const {access_token} = res
             localStorage.setItem(config.TOKEN_NAME, JSON.stringify(access_token || ''))
             localStorage.setItem(config.USER_INFO, JSON.stringify(res))
+            router.push({ name: 'serviceList' })
 
           } else {
             this.$Message.error('Fail!');

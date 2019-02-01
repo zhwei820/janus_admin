@@ -26,7 +26,7 @@ request.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response && error.response.status === 401) {
-      router.push({ name: 'ssoLogin' })
+      router.push({ name: 'Login' })
       return new Promise(() => ({})) // pending的promise，中止promise链
     } else if (error.response && error.response.status === 403) {
       vm.$Message.error('您没有权限进行此操作')

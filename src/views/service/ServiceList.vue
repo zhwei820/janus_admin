@@ -1,10 +1,8 @@
 <template>
   <div>
+    <Button id="btn" type='primary' @click="createService">NEW</Button>
 
     <Table class="ordertable" ref="orderTable" border :columns="columns" :data="tableData"></Table>
-    <Page :total="pager.total" :current="pager.page" :page-size="pager.page_size"
-          @on-page-size-change="handlePageSizeChange"
-          @on-change="handlePageChange" show-sizer/>
 
   </div>
 </template>
@@ -16,8 +14,8 @@
     total: 0,
   }
 
-  import {fetchService} from '@/apis/services'
-  import {cols, getFormList} from './helper.jsx'
+  import {fetchService} from '@/apis/service'
+  import {cols} from './helper.jsx'
   import _omit from 'lodash/omit'
 
   export default {
@@ -31,43 +29,40 @@
       }
     },
     computed:{
-      formList() {
-        return getFormList(this.staff_list)
-      },
-
       columns() {
         return cols(this)
       }
     },
     methods:{
-      handlePageSizeChange(pageSize) {
-        this.pager.page = this.pager.page_size < pageSize ?
-          Math.ceil(this.pager.page * (this.pager.page_size / pageSize)) : this.pager.page
-        this.pager.page_size = pageSize
-
-        this.fetchService()
-      },
-
-      handlePageChange(page) {
-        this.pager.page = page
-        this.fetchService()
-      },
+      // handlePageSizeChange(pageSize) {
+      //   this.pager.page = this.pager.page_size < pageSize ?
+      //     Math.ceil(this.pager.page * (this.pager.page_size / pageSize)) : this.pager.page
+      //   this.pager.page_size = pageSize
+      //
+      //   this.fetchService()
+      // },
+      //
+      // handlePageChange(page) {
+      //   this.pager.page = page
+      //   this.fetchService()
+      // },
 
       edit(row) {
-        this.$router.push({name: 'newsDetail', params: {id: row.id}})
+        this.$router.push({name: 'serviceDetail', params: {name: row.name}})
       },
 
-      createServices(row) {
-        this.$router.push({name: 'newsDetail', params: {id: 0}})
+      createService() {
+        this.$router.push({name: 'serviceDetail', params: {name: 'null'}})
       },
 
       async remove(row) {
+
         this.$Modal.confirm({
           title: '确认',
-          content: '确认删除?',
+          content: '确认删除?' + row,
           width: 350,
           onOk: async () => {
-            // await patchServices(row.id, {status: 'delete'})
+            // await putService(row.id, {status: 'delete'})
             this.fetchService()
           },
         })
