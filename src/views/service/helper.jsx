@@ -37,6 +37,7 @@ export function cols(vm) {
       render: (h, params) => {
         return (
           <div>
+            <i-button type='primary' onClick={vm.copy.bind(vm, params.row)}>Copy</i-button>
             <i-button type='primary' onClick={vm.edit.bind(vm, params.row)}>Edit</i-button>
             <i-button type='error' onClick={vm.remove.bind(vm, params.row)}>Delete</i-button>
           </div>)
@@ -46,16 +47,19 @@ export function cols(vm) {
   ]
 }
 import {getBodyLimitForm, getBodylimit} from './plugins/bodylimit'
+import {getCB, getCBForm} from './plugins/cb'
 
 export function getFormList(obj) {
   // debugger
   return {
     body_limit : getBodyLimitForm,
+    cb : getCBForm,
   }[obj.name].call(null, obj)
 }
 
 export function getDefaultFormData(name) {
   return {
     body_limit : getBodylimit,
+    cb : getCB,
   }[name].call(null)
 }

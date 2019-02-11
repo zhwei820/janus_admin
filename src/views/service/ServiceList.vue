@@ -2,7 +2,7 @@
   <div>
     <Button id="btn" type='primary' @click="createService">NEW</Button>
 
-    <Table class="ordertable" ref="orderTable" border :columns="columns" :data="tableData"></Table>
+    <Table class="ordertable" ref="orderTable" :columns="columns" :data="tableData"></Table>
 
   </div>
 </template>
@@ -14,7 +14,7 @@
     total: 0,
   }
 
-  import {fetchService} from '@/apis/service'
+  import {fetchService, deleteServiceByName} from '@/apis/service'
   import {cols} from './helper.jsx'
   import _omit from 'lodash/omit'
 
@@ -51,6 +51,10 @@
         this.$router.push({name: 'serviceDetail', params: {name: row.name}})
       },
 
+      copy(row) {
+        this.$router.push({name: 'serviceDetail', params: {name: row.name}, query: {copy:'true'}})
+      },
+
       createService() {
         this.$router.push({name: 'serviceDetail', params: {name: 'null'}})
       },
@@ -59,10 +63,10 @@
 
         this.$Modal.confirm({
           title: '确认',
-          content: '确认删除?' + row,
+          content: '确认删除' + row.name + '?',
           width: 350,
           onOk: async () => {
-            // await putService(row.id, {status: 'delete'})
+            await deleteServiceByName(row.name, {})
             this.fetchService()
           },
         })

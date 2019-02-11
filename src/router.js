@@ -42,6 +42,15 @@ export default new Router({
       component: Login
     },
     {
+      path: '/logout',
+      name: 'logout',
+      component: Login,
+      beforeEnter(to, from, next) {
+        storage.clear()
+        next()
+      },
+    },
+    {
       path: '*',
       component: () => import('@/views/Notfound.vue'),
     },

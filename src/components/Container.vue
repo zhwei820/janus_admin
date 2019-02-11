@@ -1,5 +1,8 @@
 <style scoped>
-
+  .layout {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 </style>
 
 <template>
@@ -18,11 +21,11 @@
         </Menu>
       </div>
 
-    <div class="layout-nav" style="float: right; margin-right: 100px; margin-top: 25px">
+    <div class="layout-nav" style="float: right; margin-right: 50px; margin-top: 25px">
       <Dropdown v-if="user.access_token">
 
         <a href="javascript:void(0)">
-          <p>user</p>
+          <p>ADMIN</p>
           <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
@@ -38,7 +41,6 @@
     </div>
 
     <Layout >
-      <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
       <Content :style="{padding: '0 16px 16px'}">
           <router-view/>
       </Content>
@@ -81,3 +83,4 @@
   }
 
 </script>
+

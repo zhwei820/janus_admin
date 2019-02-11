@@ -37,7 +37,7 @@
 
           <FormItem label="Balancing" prop="proxy.upstreams.balancing" required>
             <Col span="12">
-              <Select v-model="formDynamic.proxy.upstreams.balancing" multiple>
+              <Select v-model="formDynamic.proxy.upstreams.balancing" >
                 <Option v-for="item in BalanceList" :value="item" :key="item">{{ item }}</Option>
               </Select>
             </Col>
@@ -59,14 +59,14 @@
                 <Input type="text" v-model="item.weight" placeholder="Enter something..."></Input>
               </Col>
               <Col span="2" offset="1">
-                <Button type="warning" @click="handleRemove(ii)">del</Button>
+                <Button type="warning" @click="handleRemoveTarget(ii)">del</Button>
               </Col>
             </Row>
           </FormItem>
           <FormItem>
             <Row>
               <Col span="6">
-                <Button type="dashed" long @click="handleAdd" icon="md-add">Add target</Button>
+                <Button type="dashed" long @click="handleAddTarget" icon="md-add">Add target</Button>
               </Col>
             </Row>
           </FormItem>
@@ -76,7 +76,7 @@
         <Card>
           <p slot="title">Plugins</p>
 
-          <FormItem label="Target"
+          <FormItem label="Plugin"
                     v-for="(item, ii) in formDynamic.plugins"
                     :key="ii">
             <Row>
@@ -88,7 +88,7 @@
 
               </Col>
               <Col span="2" offset="1">
-                <Button type="warning" @click="handleRemove(ii)">del</Button>
+                <Button type="warning" @click="handleRemovePlugin(ii)">del</Button>
               </Col>
             </Row>
           </FormItem>
@@ -204,20 +204,19 @@
           }
         })
       },
-      handleAdd() {
+      handleAddTarget() {
         this.formDynamic.proxy.upstreams.targets.push({
           target: '',
           weight: 0,
         });
       },
-      handleAddPlugin() {
-        this.formDynamic.plugins.push({
-          name: '测试',
-          name1: '测试',
-        });
-      },
-      handleRemove(ii) {
-        this.formDynamic.proxy.upstreams.targets.slice(ii)
+
+      handleRemoveTarget(ii) {
+        if (this.formDynamic.proxy.upstreams.targets.length > 1) {
+          this.formDynamic.proxy.upstreams.targets.splice(ii)
+        }else{
+          this.$Message.warning('Can not delete last target!')
+        }
       },
 
       async createOrUpdateService(data) {
@@ -240,6 +239,14 @@
         const response = await fetchServiceByName(name)
         // @ts-ignore
         this.formDynamic = response
+        if (!this.formDynamic.plugins) {
+          this.formDynamic.plugins = []
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const copy = urlParams.get('copy');
+        if (copy) {
+          this.formDynamic.name = ''
+        }
       },
 
       showPluginModal(ii) {
@@ -274,7 +281,7 @@
           // closable: true,  这个参数有bug...
           onOk: async () => {
             this.formDynamic.plugins.push(getDefaultFormData(this.pluginName))
-            this.showPluginModal(this.formDynamic.plugins.length - 1)
+            // this.showPluginModal(this.formDynamic.plugins.length - 1)
           },
           onCancel: () => {
             // this.$Message.error()
@@ -293,7 +300,9 @@
       handleFormDataChange(newVal) {
         this.formDynamic.plugins[this.pluginIndex] = newVal
       },
-
+      handleRemovePlugin(ii) {
+        this.formDynamic.plugins.splice(ii)
+      },
 
     },
     created() {
