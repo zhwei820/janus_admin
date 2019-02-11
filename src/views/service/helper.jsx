@@ -48,12 +48,14 @@ export function cols(vm) {
 }
 import {getBodyLimitForm, getBodylimit} from './plugins/bodylimit'
 import {getCB, getCBForm} from './plugins/cb'
+import {getRateLimit, getRateLimitForm} from './plugins/rate_limit'
 
 export function getFormList(obj) {
   // debugger
   return {
     body_limit : getBodyLimitForm,
     cb : getCBForm,
+    rate_limit : getRateLimitForm,
   }[obj.name].call(null, obj)
 }
 
@@ -61,5 +63,6 @@ export function getDefaultFormData(name) {
   return {
     body_limit : getBodylimit,
     cb : getCB,
+    rate_limit : getRateLimit,
   }[name].call(null)
 }

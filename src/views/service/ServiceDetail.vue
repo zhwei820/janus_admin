@@ -154,6 +154,7 @@
           'HEAD',
           'OPTIONS',
         ],
+        copy: '',
         formDynamic: {
           "name": "",
           "active": true,
@@ -188,8 +189,11 @@
     },
     computed: {
       name() {
-        const name = this.$route.params.name
-        return name === 'null' ? null : name
+        if (!this.copy) {
+          const name = this.$route.params.name
+          return name === 'null' ? null : name
+        }
+        return null
       }
     },
     methods: {
@@ -213,7 +217,7 @@
 
       handleRemoveTarget(ii) {
         if (this.formDynamic.proxy.upstreams.targets.length > 1) {
-          this.formDynamic.proxy.upstreams.targets.splice(ii)
+          this.formDynamic.proxy.upstreams.targets.splice(ii, 1)
         }else{
           this.$Message.warning('Can not delete last target!')
         }
@@ -243,8 +247,8 @@
           this.formDynamic.plugins = []
         }
         const urlParams = new URLSearchParams(window.location.search);
-        const copy = urlParams.get('copy');
-        if (copy) {
+        this.copy = urlParams.get('copy');
+        if (this.copy) {
           this.formDynamic.name = ''
         }
       },
@@ -301,7 +305,7 @@
         this.formDynamic.plugins[this.pluginIndex] = newVal
       },
       handleRemovePlugin(ii) {
-        this.formDynamic.plugins.splice(ii)
+        this.formDynamic.plugins.splice(ii, 1)
       },
 
     },

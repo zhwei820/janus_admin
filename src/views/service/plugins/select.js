@@ -9,6 +9,7 @@ export function getSelectPluginForm(defaultValue) {
       options: [
         {value: 'body_limit', text: 'Body Limit'},
         {value: 'cb', text: 'Circuit Breaker'},
+        {value: 'rate_limit', text: 'Rate Limiting'},
       ]
     },
   ]

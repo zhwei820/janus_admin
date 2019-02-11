@@ -67,7 +67,20 @@
           Object.keys(nextForm).forEach((v) => {
             const tmp = v.split('.')
             if (tmp.length > 1) {
-              _nextForm[tmp[0]] = {[tmp[1]]: nextForm[v]}
+              if (tmp.length == 2) {
+                if (_nextForm[tmp[0]] == undefined) {
+                  _nextForm[tmp[0]] = {}
+                }
+                  _nextForm[tmp[0]][tmp[1]] = nextForm[v]
+              } else if (tmp.length == 3) {
+                if (_nextForm[tmp[0]] == undefined) {
+                  _nextForm[tmp[0]] = {}
+                }
+                if (_nextForm[tmp[0]][tmp[1]] == undefined) {
+                  _nextForm[tmp[0]][tmp[1]] = {}
+                }
+                _nextForm[tmp[0]][tmp[1]][tmp[2]] = nextForm[v]
+              }
             } else {
               _nextForm[v] = nextForm[v]
             }
