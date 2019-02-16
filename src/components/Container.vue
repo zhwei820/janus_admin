@@ -15,7 +15,7 @@
               @on-select="onSelectMenuChange">
 
           <MenuItem name="service" to="/service">Janus Apis</MenuItem>
-          <MenuItem name="authservers" to="/janusauth">Janus Auth</MenuItem>
+          <MenuItem name="authservers" to="/auths">Janus Auth</MenuItem>
           <MenuItem name="health" to="/health">Health Check</MenuItem>
 
         </Menu>

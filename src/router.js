@@ -34,6 +34,16 @@ export default new Router({
           path: 'service/:name',
           component: () => import('./views/service/ServiceDetail.vue'),
         },
+        {
+          name: 'authList',
+          path: 'auths',
+          component: () => import('./views/auths/AuthList.vue'),
+        },
+        {
+          name: 'authDetail',
+          path: 'auths/:name',
+          component: () => import('./views/auths/AuthDetail.vue'),
+        },
       ],
     },
     {

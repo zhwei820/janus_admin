@@ -18,60 +18,7 @@
         </FormItem>
 
 
-        <Card>
-          <p slot="title">Proxy</p>
-
-          <FormItem label="Listen Path" prop="proxy.listen_path" required>
-            <Col span="12">
-              <Input v-model="formDynamic.proxy.listen_path" placeholder="Enter your name"></Input>
-            </Col>
-          </FormItem>
-
-          <FormItem label="methods" prop="proxy.methods" required>
-            <Col span="12">
-              <Select v-model="formDynamic.proxy.methods" multiple>
-                <Option v-for="item in MethodsList" :value="item" :key="item">{{ item }}</Option>
-              </Select>
-            </Col>
-          </FormItem>
-
-          <FormItem label="Balancing" prop="proxy.upstreams.balancing" required>
-            <Col span="12">
-              <Select v-model="formDynamic.proxy.upstreams.balancing" >
-                <Option v-for="item in BalanceList" :value="item" :key="item">{{ item }}</Option>
-              </Select>
-            </Col>
-          </FormItem>
-
-          <FormItem label="Target"
-                    v-for="(item, ii) in formDynamic.proxy.upstreams.targets"
-                    :key="ii"
-                    :prop="'proxy.upstreams.targets.' + ii + '.target'"
-                    :rules="{required: false, message: '', trigger: 'blur'}">
-            <Row>
-              <Col span="10">
-                <Input type="text" v-model="item.target" placeholder="Enter something..."></Input>
-              </Col>
-              <Col span="2" offset="1">
-                <span style="float: right; margin-right: 10px"> weight </span>
-              </Col>
-              <Col span="2">
-                <Input type="text" v-model="item.weight" placeholder="Enter something..."></Input>
-              </Col>
-              <Col span="2" offset="1">
-                <Button type="warning" @click="handleRemoveTarget(ii)">del</Button>
-              </Col>
-            </Row>
-          </FormItem>
-          <FormItem>
-            <Row>
-              <Col span="6">
-                <Button type="dashed" long @click="handleAddTarget" icon="md-add">Add target</Button>
-              </Col>
-            </Row>
-          </FormItem>
-        </Card>
-
+        <Proxy :value.sync="formDynamic.proxy" :title="Proxy"/>
 
         <Card>
           <p slot="title">Plugins</p>
@@ -123,12 +70,10 @@
   </div>
 </template>
 <script lang="jsx">
-  import _ from 'lodash'
-  let a = {}
-  _.set(a, 'dfd.sdfds', 'dfdfd')
 
   import {createService, putService, fetchServiceByName} from '@/apis/service'
   import InputForm from '@/components/InputForm'
+  import Proxy from '@/components/Proxy'
   import {getDefaultFormData, getFormList} from './helper.jsx'
   import {getSelectPluginForm} from './plugins/select'
 
@@ -137,23 +82,13 @@
     components: {
       // eslint-disable-next-line vue/no-unused-components
       InputForm: InputForm,
+      Proxy: Proxy,
     },
     data() {
       return {
         pluginName: 'body_limit',
         pluginIndex: -1,
-        BalanceList: [
-          'roundrobin',
-          'weight',
-        ],
-        MethodsList: [
-          'GET',
-          'POST',
-          'PUT',
-          'PATCH',
-          'HEAD',
-          'OPTIONS',
-        ],
+
         copy: '',
         formDynamic: {
           "name": "",
@@ -208,20 +143,7 @@
           }
         })
       },
-      handleAddTarget() {
-        this.formDynamic.proxy.upstreams.targets.push({
-          target: '',
-          weight: 0,
-        });
-      },
 
-      handleRemoveTarget(ii) {
-        if (this.formDynamic.proxy.upstreams.targets.length > 1) {
-          this.formDynamic.proxy.upstreams.targets.splice(ii, 1)
-        }else{
-          this.$Message.warning('Can not delete last target!')
-        }
-      },
 
       async createOrUpdateService(data) {
         this.errors = {}  //
