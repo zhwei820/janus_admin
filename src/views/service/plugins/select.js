@@ -10,6 +10,7 @@ export function getSelectPluginForm(defaultValue) {
         {value: 'body_limit', text: 'Body Limit'},
         {value: 'cb', text: 'Circuit Breaker'},
         {value: 'rate_limit', text: 'Rate Limiting'},
+        {value: 'oauth2', text: 'oauth2'},
       ]
     },
   ]

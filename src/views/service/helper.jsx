@@ -1,4 +1,3 @@
-import {dateFormat} from '@/utils/dateFormat'
 
 // tslint:disable
 export function cols(vm) {
@@ -49,20 +48,23 @@ export function cols(vm) {
 import {getBodyLimitForm, getBodylimit} from './plugins/bodylimit'
 import {getCB, getCBForm} from './plugins/cb'
 import {getRateLimit, getRateLimitForm} from './plugins/rate_limit'
+import {getOauth, getOauthForm} from './plugins/oauth'
 
-export function getFormList(obj) {
-  // debugger
+export function getFormList(obj, options=null) {
   return {
     body_limit : getBodyLimitForm,
     cb : getCBForm,
     rate_limit : getRateLimitForm,
-  }[obj.name].call(null, obj)
+    oauth2 : getOauthForm,
+  }[obj.name].call(null, obj, options)
 }
 
-export function getDefaultFormData(name) {
+export function getDefaultFormData(name, ) {
+
   return {
     body_limit : getBodylimit,
     cb : getCB,
     rate_limit : getRateLimit,
+    oauth2 : getOauth,
   }[name].call(null)
 }

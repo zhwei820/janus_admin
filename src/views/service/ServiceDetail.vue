@@ -18,7 +18,7 @@
         </FormItem>
 
 
-        <Proxy :value.sync="formDynamic.proxy" :title="Proxy"/>
+        <Proxy :value.sync="formDynamic.proxy" :title="'Proxy'"/>
 
         <Card>
           <p slot="title">Plugins</p>
@@ -76,6 +76,7 @@
   import Proxy from '@/components/Proxy'
   import {getDefaultFormData, getFormList} from './helper.jsx'
   import {getSelectPluginForm} from './plugins/select'
+  import {fetchAuth} from '@/apis/auths'
 
   export default {
     name: "ServiceDetail",
@@ -90,6 +91,7 @@
         pluginIndex: -1,
 
         copy: '',
+        OauthList: [],
         formDynamic: {
           "name": "",
           "active": true,
@@ -173,13 +175,22 @@
         if (this.copy) {
           this.formDynamic.name = ''
         }
+
+        const response2 = await fetchAuth(name)
+        this.OauthList = []
+        response2.forEach((val) => {
+          this.OauthList.push(
+            {value: val.name, text: val.name},
+          )
+        })
+
       },
 
       showPluginModal(ii) {
         this.pluginIndex = ii
         console.log(this.formDynamic.plugins)
         console.log(ii)
-        this.formList = getFormList(this.formDynamic.plugins[ii])
+        this.formList = getFormList(this.formDynamic.plugins[ii], this.OauthList)
         this.$Modal.confirm({
           title: 'Edit Plugin',
           width: 600,
