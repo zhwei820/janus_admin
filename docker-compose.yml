@@ -3,7 +3,7 @@ version: '3'
 services:
 
   janus_admin:
-      image: janus_admin
+      image: daocloud.io/zhwei820/janus_admin
       ports:
         - "8082:80"
       environment:
