@@ -17,7 +17,7 @@ yarn run build
 
 ### Run in docker
 
-> 1. start janus backend;
+> 1. start janus backend https://github.com/hellofresh/janus;
 > 2. docker-compose up;
 > 3. visit http://localhost:8082/login in browser.
 
