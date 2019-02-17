@@ -10,7 +10,7 @@
         ></normal-field>
       </template>
       <FormItem v-if="showSubmit">
-        <Button type="primary" @click="handleSubmit()">提交</Button>
+        <Button type="primary" @click="handleSubmit()">Submit</Button>
       </FormItem>
     </Form>
   </div>
