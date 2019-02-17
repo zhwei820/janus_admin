@@ -3,6 +3,7 @@
     <Row>
       <Col span="6" offset="9">
         <Card :bordered="true" style="margin-top: 40%">
+          <p slot="title">Janus Admin</p>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
             <FormItem prop="username">
               <Input type="text" v-model="formInline.username" placeholder="Username">
