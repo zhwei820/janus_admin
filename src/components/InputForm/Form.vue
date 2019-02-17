@@ -3,6 +3,7 @@
     <Form :model="form" ref="theForm" label-position="right" :label-width='120' :rules="rules">
       <template v-for="scm in formList">
         <normal-field
+                :key="scm.key"
                 :type="scm.type"
                 :value.sync="form[scm.key]"
                 :schema="scm"
