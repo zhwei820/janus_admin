@@ -22,9 +22,6 @@
       }
     },
     computed: {
-      columns () {
-        return cols(this)
-      }
     },
     methods: {
 
