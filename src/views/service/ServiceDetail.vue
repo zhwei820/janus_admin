@@ -167,6 +167,8 @@
         const response = await fetchServiceByName(name)
         // @ts-ignore
         this.formDynamic = response
+        // this.$set(this.formDynamic, response)
+        // console.log(this.formDynamic)
         if (!this.formDynamic.plugins) {
           this.formDynamic.plugins = []
         }

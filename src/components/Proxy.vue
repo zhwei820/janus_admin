@@ -8,6 +8,25 @@
             </Col>
         </FormItem>
 
+
+        <FormItem label="append_path" prop="append_path">
+
+            <i-switch size="large" v-model="proxy.append_path">
+                <span slot="open">ON</span>
+                <span slot="close">OFF</span>
+            </i-switch>
+        </FormItem>
+
+
+        <FormItem label="strip_path" prop="strip_path">
+
+            <i-switch size="large" v-model="proxy.strip_path">
+                <span slot="open">ON</span>
+                <span slot="close">OFF</span>
+            </i-switch>
+        </FormItem>
+
+
         <FormItem label="methods" >
             <Col span="12">
                 <Select v-model="proxy.methods" multiple>
@@ -104,6 +123,12 @@
     },
     watch: {
 
+      value: {
+        deep: true,
+        handler (nextForm) {
+          this.proxy = nextForm
+        },
+      },
       proxy: {
         deep: true,
         handler (nextForm) {
@@ -113,7 +138,7 @@
           this.$emit('update:value', nextForm)
 
         },
-      }
+      },
     },
     methods:{
       handleAddTarget() {
@@ -131,10 +156,12 @@
         }
       },
     },
-    created () {
-      this.$set(this.proxy, this.value)
-      // this.proxy = this.value
-    }
+    mounted () {
+      // this.$set(this.proxy, this.value)
+      // this.$nextTick(()=> {
+      //   this.proxy = this.value
+      // })
+    },
   }
 </script>
 
