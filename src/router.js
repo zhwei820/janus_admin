@@ -44,6 +44,12 @@ export default new Router({
           path: 'auths/:name',
           component: () => import('./views/auths/AuthDetail.vue'),
         },
+
+        {
+          name: 'health',
+          path: 'health',
+          component: () => import('./views/healthcheck/HealthCheck.vue'),
+        },
       ],
     },
     {
