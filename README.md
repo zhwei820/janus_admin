@@ -15,18 +15,11 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
+### Run in docker
 
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+> 1. start janus backend;
+> 2. docker-compose up;
+> 3. visit http://localhost:8082/login in browser.
 
 ### Screenshots
 

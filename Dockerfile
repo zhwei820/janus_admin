@@ -1,11 +1,8 @@
-FROM node:10.3.0-alpine as builder
+FROM node:10.15.1-jessie as builder
 WORKDIR /code
 
-COPY package.json yarn.lock ./
+COPY . ./
 RUN yarn install
-
-COPY public/ ./public/
-COPY src/ ./src/
 RUN yarn build
 
 # -----
@@ -14,8 +11,8 @@ FROM nginx:stable-alpine
 MAINTAINER HelloFresh
 COPY --from=builder /code/deploy/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /code/dist/ /usr/share/nginx/html/
-COPY --from=builder /code/src/externalConfig.js.tmpl /tmp/
+COPY --from=builder /code/public/externalConfig.js.tmpl /tmp/
 EXPOSE 80
 CMD envsubst < /tmp/externalConfig.js.tmpl > /usr/share/nginx/html/externalConfig.js && nginx -g 'daemon off;'
 
-# docker build . -t janus_admin
+# docker build . -t daocloud.io/zhwei820/janus_admin
