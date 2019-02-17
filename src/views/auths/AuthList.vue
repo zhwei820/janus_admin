@@ -50,8 +50,8 @@
       async remove(row) {
 
         this.$Modal.confirm({
-          title: '确认',
-          content: '确认删除' + row.name + '?',
+          title: 'confirm',
+          content: 'confirm delete' + row.name + '?',
           width: 350,
           onOk: async () => {
             await deleteAuthByName(row.name, {})
