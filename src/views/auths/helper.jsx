@@ -15,7 +15,6 @@ export function cols(vm) {
       render: (h, params) => {
         return (
           <div>
-            <i-button type='primary' onClick={vm.copy.bind(vm, params.row)}>Copy</i-button>
             <i-button type='primary' onClick={vm.edit.bind(vm, params.row)}>Edit</i-button>
             <i-button type='error' onClick={vm.remove.bind(vm, params.row)}>Delete</i-button>
           </div>)
